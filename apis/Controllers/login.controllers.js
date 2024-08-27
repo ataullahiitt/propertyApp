@@ -50,8 +50,11 @@ const userLogin = async (req, res, next) => {
 
     } catch (e) {
 
+        console.log("Err-->", e);
+
         res.status(500).json({
-            message: "something went wrong"
+            message: "something went wrong!!",
+            errorText: e?.message
         })
     }
 }
