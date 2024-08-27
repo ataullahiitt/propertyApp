@@ -1,0 +1,45 @@
+services:
+    db:
+        image: mysql:latest
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=property_db
+        container_name: mysql_db_container
+        volumes:
+            - pro_app_mysql_db:/var/lib/mysql
+        healthcheck:
+            #test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot" ]
+            test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+            interval: 1m30s
+            timeout: 30s
+            retries: 5
+            start_period: 30s
+    api:
+        build:
+            context: ./apis
+        ports:
+            - "5000:5000"
+        environment:
+            - DATABASE_URL=mysql://root:root@mysql_db_container:3306/property_db
+        restart: always
+        container_name: api_container
+        depends_on:
+            db:
+                condition: service_healthy
+                restart: true
+
+        #command: npx prisma migrate deploy
+        command: >
+            sh -c "npx prisma migrate dev &&  node app.js"
+
+    client:
+        build:
+            context: ./frontend
+        ports:
+            - 80:80
+        container_name: web_container
+
+volumes:
+    pro_app_mysql_db: {}
