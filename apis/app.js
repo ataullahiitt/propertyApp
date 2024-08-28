@@ -13,9 +13,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/property', propertyRoutes);
-app.use('/users', userRoutes);
-app.use('/login', loginRoutes);
+app.use('/api/property', propertyRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/login', loginRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,4 +1,4 @@
-export let BASEURL = document.location.origin + ':' + 5000;
+export let BASEURL = document.location.origin + '/api';
 
 export const APIURL = {
     LOGIN: `${BASEURL}/login`,
