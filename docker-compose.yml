@@ -72,6 +72,8 @@ services:
             db:
                 condition: service_healthy
         container_name: phpmyadmin
+        profiles:
+            - dev
 
 volumes:
     pro_app_mysql_db: {}
