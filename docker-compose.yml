@@ -32,8 +32,6 @@ services:
             db:
                 condition: service_healthy
                 restart: true
-            nginx:
-                condition: service_started
             redis:
                 condition: service_started
 
