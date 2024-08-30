@@ -24,6 +24,8 @@ services:
         environment:
             - DATABASE_URL=mysql://root:root@mysql_db_container:3306/property_db
             - JWT_SECRET=eww2442sfsffsf3131314fsfsfs4242
+            - REDIS_HOST=redis_server
+            - REDIS_PORT=6379
         restart: always
         container_name: api
         depends_on:
@@ -32,6 +34,9 @@ services:
                 restart: true
             nginx:
                 condition: service_started
+            redis:
+                condition: service_started
+
         command: >
             sh -c "npx prisma migrate dev &&  npx prisma generate &&
              node app.js"
@@ -75,5 +80,10 @@ services:
         profiles:
             - dev
 
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+        container_name: redis_server
 volumes:
     pro_app_mysql_db: {}
