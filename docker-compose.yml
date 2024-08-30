@@ -49,7 +49,6 @@ services:
             - "4201:4201"
         container_name: client
         depends_on:
-            - nginx
             - api
             #nginx:
             #    restart: always
@@ -69,6 +68,10 @@ services:
             - "80:80"
         container_name: nginx
         restart: always
+        depends_on:
+            - client
+            - api
+
     phpmyadmin:
         image: phpmyadmin
         ports:
